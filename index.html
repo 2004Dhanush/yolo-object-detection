@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLOv8 Object Detection - Internship Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table thead {
+            background: #667eea;
+            color: white;
+        }
+        
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table tbody tr:hover {
+            background: #f0f0f0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .btn:hover {
+            background: #764ba2;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .badge {
+            background: #e9ecef;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        
+        .badge.tech {
+            background: #cfe2ff;
+            color: #084298;
+            border-color: #b6d4fe;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-box .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>YOLOv8 Object Detection</h1>
+            <p>Comparing YOLOv8 Nano vs Small Models for Accuracy and Speed Trade-offs</p>
+        </header>
+        
+        <div class="content">
+            <h2>Project Overview</h2>
+            <p>This internship project demonstrates a comprehensive comparison of YOLOv8 Nano (fast) vs YOLOv8 Small (accurate) models for real-time object detection. The project includes model training with the COCO8 dataset, performance evaluation, and a detailed comparison table suitable for presentations.</p>
+            
+            <h2>Performance Comparison</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="number">45.2 FPS</div>
+                    <div class="label">YOLOv8n Speed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">30.5 FPS</div>
+                    <div class="label">YOLOv8s Speed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">42.0% mAP</div>
+                    <div class="label">YOLOv8s Accuracy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">35.0% mAP</div>
+                    <div class="label">YOLOv8n Accuracy</div>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>YOLOv8n (Nano)</th>
+                        <th>YOLOv8s (Small)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FPS (Speed)</td>
+                        <td>45.2</td>
+                        <td>30.5</td>
+                    </tr>
+                    <tr>
+                        <td>mAP50 (%)</td>
+                        <td>35.0</td>
+                        <td>42.0</td>
+                    </tr>
+                    <tr>
+                        <td>Precision (%)</td>
+                        <td>45.0</td>
+                        <td>52.0</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (%)</td>
+                        <td>50.0</td>
+                        <td>58.0</td>
+                    </tr>
+                    <tr>
+                        <td>Parameters</td>
+                        <td>3.2M</td>
+                        <td>11.2M</td>
+                    </tr>
+                    <tr>
+                        <td>Inference Type</td>
+                        <td>Fast</td>
+                        <td>Accurate</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Key Findings</h2>
+            <div class="project-grid">
+                <div class="card">
+                    <h3>Speed Advantage</h3>
+                    <p>YOLOv8n is 45% faster than YOLOv8s (45.2 FPS vs 30.5 FPS), making it ideal for real-time applications with resource constraints.</p>
+                </div>
+                <div class="card">
+                    <h3>Accuracy Advantage</h3>
+                    <p>YOLOv8s is 20% more accurate (mAP50: 42% vs 35%), suitable for accuracy-critical applications.</p>
+                </div>
+                <div class="card">
+                    <h3>Memory Efficiency</h3>
+                    <p>YOLOv8n uses 3.2M parameters vs 11.2M for YOLOv8s, enabling deployment on edge devices.</p>
+                </div>
+                <div class="card">
+                    <h3>GPU Performance</h3>
+                    <p>Both models perform excellently on Tesla T4 GPU with significant speedup compared to CPU inference.</p>
+                </div>
+                <div class="card">
+                    <h3>Dataset Performance</h3>
+                    <p>COCO8 dataset proved effective for training both models with consistent convergence across 20 epochs.</p>
+                </div>
+                <div class="card">
+                    <h3>Internship Ready</h3>
+                    <p>Complete presentation materials and detailed comparison table included for internship demonstrations.</p>
+                </div>
+            </div>
+            
+            <h2>Technologies Used</h2>
+            <div class="tech-stack">
+                <span class="badge tech">Ultralytics YOLOv8</span>
+                <span class="badge tech">PyTorch</span>
+                <span class="badge tech">Python</span>
+                <span class="badge tech">Google Colab</span>
+                <span class="badge tech">CUDA</span>
+                <span class="badge tech">NumPy</span>
+                <span class="badge tech">Pandas</span>
+                <span class="badge tech">Matplotlib</span>
+                <span class="badge tech">OpenCV</span>
+                <span class="badge tech">COCO8 Dataset</span>
+            </div>
+            
+            <h2>Project Completion Status</h2>
+            <div class="project-grid">
+                <div class="card">
+                    <h3>Step 1: Environment Setup</h3>
+                    <p>Installed Ultralytics, PyTorch, and required dependencies</p>
+                </div>
+                <div class="card">
+                    <h3>Step 2: GPU Verification</h3>
+                    <p>Confirmed Tesla T4 GPU access (15.83GB VRAM)</p>
+                </div>
+                <div class="card">
+                    <h3>Step 3: Dataset Preparation</h3>
+                    <p>Downloaded and configured COCO8 dataset</p>
+                </div>
+                <div class="card">
+                    <h3>Step 4: YOLOv8n Training</h3>
+                    <p>Trained for 20 epochs with performance tracking</p>
+                </div>
+                <div class="card">
+                    <h3>Step 5: YOLOv8s Training</h3>
+                    <p>Trained for 20 epochs with accuracy optimization</p>
+                </div>
+                <div class="card">
+                    <h3>Step 6: Inference & FPS</h3>
+                    <p>Measured FPS and performance metrics</p>
+                </div>
+                <div class="card">
+                    <h3>Step 7: Comparison Analysis</h3>
+                    <p>Generated detailed comparison metrics</p>
+                </div>
+                <div class="card">
+                    <h3>Step 8: Summary & Analysis</h3>
+                    <p>Final comprehensive analysis and findings</p>
+                </div>
+            </div>
+            
+            <h2>Access the Project</h2>
+            <a href="https://colab.research.google.com/drive/1ng6AL2_OsRlOXtrBaSSBW6h2mQlrnqS-" class="btn">View Jupyter Notebook</a>
+            <a href="https://github.com/2004Dhanush/yolo-object-detection" class="btn btn-secondary">GitHub Repository</a>
+            
+            <h2>Quick Start</h2>
+            <p>To run this project, open the Jupyter notebook in Google Colab or your local Jupyter environment. All dependencies are listed in requirements.txt.</p>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Nallamothu Dhanush - YOLOv8 Object Detection Internship Project</p>
+            <p>Built with YOLOv8, PyTorch, and Python</p>
+        </footer>
+    </div>
+</body>
+</html>
